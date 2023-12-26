@@ -1,6 +1,8 @@
 // Variables
 const numbers = document.querySelector('#numbers');
 const operators = document.querySelector('#operators');
+const clearAllBtn = document.querySelector('#clearAll');
+const deleteBtn = document.querySelector('#delete');
 
 let total = 0;
 let num1 = null;
@@ -9,8 +11,10 @@ let operator = null;
 
 eventListeners()
 function eventListeners() {
-    numbers.addEventListener('click', addDigit)
-    operators.addEventListener('click', addOperator)
+    numbers.addEventListener('click', addDigit);
+    operators.addEventListener('click', addOperator);
+    clearAllBtn.addEventListener('click', clearAll);
+    /* deleteBtn.addEventListener('click',); */
 }
 
 function addDigit(e) {
@@ -28,11 +32,11 @@ function addOperator(e) {
     if (!e.target.classList.contains('operator')) return
     if (e.target.classList.contains('equals')) {
         resolve()
-    } else {
+    }
+    else {
         operator = e.target.dataset.id
-        if (num2 !== null) {
-            resolve()
-        }
+        console.log(operator)
+        resolve()
     }
 }
 
@@ -60,9 +64,15 @@ function operate(a, operator, b) {
 }
 
 function resolve() {
+    if (num1 === null || num2 === null) return
     total = operate(parseInt(num1), operator, parseInt(num2));
     num1 = total;
     num2 = null;
-    operator = '+';
     console.log(total)
+}
+function clearAll() {
+    total = 0;
+    num1 = null;
+    num2 = null;
+    operator = null;
 }
