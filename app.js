@@ -65,6 +65,7 @@ function operate(a, operator, b) {
 
 function resolve() {
     if (num1 === null || num2 === null || operator === null) return
+    if (operator === '/' && num2 === '0') return
     total = operate(parseFloat(num1), operator, parseFloat(num2));
     num1 = total;
     num2 = null;
