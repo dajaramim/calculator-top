@@ -4,7 +4,7 @@ const operators = document.querySelector('#operators');
 const clearAllBtn = document.querySelector('#clearAll');
 const deleteBtn = document.querySelector('#delete');
 
-let total = 0;
+let total = null;
 let num1 = null;
 let num2 = null;
 let operator = null;
@@ -14,7 +14,7 @@ function eventListeners() {
     numbers.addEventListener('click', addDigit);
     operators.addEventListener('click', addOperator);
     clearAllBtn.addEventListener('click', clearAll);
-    /* deleteBtn.addEventListener('click',); */
+    deleteBtn.addEventListener('click', deleteDigit);
 }
 
 function addDigit(e) {
@@ -22,9 +22,9 @@ function addDigit(e) {
     if (operator === null) {
         num1 === null ? num1 = e.target.textContent : num1 += e.target.textContent
         console.log(num1)
-    } else{
+    } else {
         num2 === null ? num2 = e.target.textContent : num2 += e.target.textContent
-        console.log(num2);    
+        console.log(num2);
     }
 }
 
@@ -64,15 +64,29 @@ function operate(a, operator, b) {
 }
 
 function resolve() {
-    if (num1 === null || num2 === null) return
-    total = operate(parseInt(num1), operator, parseInt(num2));
+    if (num1 === null || num2 === null || operator === null) return
+    total = operate(parseFloat(num1), operator, parseFloat(num2));
     num1 = total;
     num2 = null;
+    operator = null
     console.log(total)
 }
 function clearAll() {
-    total = 0;
+    total = null;
     num1 = null;
     num2 = null;
     operator = null;
+}
+function deleteDigit() {
+    if (num1 === null) return;
+    if (num1 !== null && num2 === null && operator === null) {
+        num1 = parseFloat(num1.toString().slice(0, -1))
+        if (isNaN(num1)) num1 = null;
+
+    } else if (operator !== null && num2 === null) {
+        operator = null;
+
+    } else {
+        num2 = num2.slice(0, -1);
+    }
 }
