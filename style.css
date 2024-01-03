@@ -1,15 +1,116 @@
-.calculator{
-
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
 }
 
-.numbers {
-
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+body {
+    background-color: #1d3849;
+}
+.calculator-container{
+    margin: 20rem auto;
+    width: 50rem;
+    padding: 6rem;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #205b7a;
+}
+.output-container{
+    width: 90%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5;
+    padding: 0.5rem 2rem 2rem 0;
+    background-color: #a2bbcf;
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+    font-family: monospace;
+    box-shadow: inset 5px 5px 5px #1d3849, inset -5px -5px 5px #1d3849;
+}
+.output-container p {
+    margin: 0;
+}
+.keyboard-calculator {
+    width: 100%;
+    display: flex;
+    align-items: top;
+    gap: 1rem;
 }
 
+.btn {
+    background-color: #1b5675;
+    height: 7rem;
+    border-radius: 15px;
+    box-shadow: 3px 3px 5px #142f44;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-weight: 900;
+    flex-grow: 1;
+    cursor: pointer;
+}
 .number {
-
+    flex-basis: 30%;
+    transition-duration: 0.4s;
+    transition-property: background-color,transform;
 }
 
-.operators {
-    
+.number:hover {
+    background-color: #a2bbcf;
+    transform: scale(0.95);
 }
+.col-1 {
+    flex-basis: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+.erase {
+    flex-basis: 48%;
+    transition-duration: 0.4s;
+    transition-property: background-color,transform;
+}
+.erase:hover{
+    background-color: #D56544;
+    transform: scale(0.95);
+}
+.operator {
+    font-size: 2rem;
+    transition-duration: 0.4s;
+    transition-property: background-color,transform;
+}
+.operator:hover{
+    background-color: #D59344;
+    transform: scale(0.95);
+}
+/* 52AE7D green */
+.equals {
+    transition-property: background-color,transform;
+}
+.equals:hover{
+    background-color: #52AE7D;
+    transform: scale(0.95);
+}
+.col-2 {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+

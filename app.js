@@ -1,8 +1,14 @@
 // Variables
-const numbers = document.querySelector('#numbers');
-const operators = document.querySelector('#operators');
+const numbersHTML = document.querySelectorAll('.number');
+const operatorsHTML = document.querySelectorAll('.operator');
 const clearAllBtn = document.querySelector('#clearAll');
 const deleteBtn = document.querySelector('#delete');
+const ecuationText = document.querySelector('#ecuation-text'); 
+const totalText = document.querySelector('#total-text'); 
+
+
+const numbers = Array.from(numbersHTML);
+const operators = Array.from(operatorsHTML);
 
 let total = null;
 let num1 = null;
@@ -11,8 +17,12 @@ let operator = null;
 
 eventListeners()
 function eventListeners() {
-    numbers.addEventListener('click', addDigit);
-    operators.addEventListener('click', addOperator);
+    numbers.forEach(number => {
+        number.addEventListener('click', addDigit);
+    });
+    operators.forEach(operator => {
+        operator.addEventListener('click', addOperator);
+    })
     clearAllBtn.addEventListener('click', clearAll);
     deleteBtn.addEventListener('click', deleteDigit);
 }
@@ -20,24 +30,44 @@ function eventListeners() {
 function addDigit(e) {
     if (!e.target.classList.contains('number')) return
     if (operator === null) {
-        num1 === null ? num1 = e.target.textContent : num1 += e.target.textContent
-        console.log(num1)
+        num1 === null ? num1 = e.target.dataset.id : num1 += e.target.dataset.id
+        renderHTML()
     } else {
-        num2 === null ? num2 = e.target.textContent : num2 += e.target.textContent
-        console.log(num2);
+        num2 === null ? num2 = e.target.dataset.id : num2 += e.target.dataset.id
+        renderHTML()
     }
 }
 
 function addOperator(e) {
-    if (!e.target.classList.contains('operator')) return
+    if (!e.target.classList.contains('operator') || num1 === null) return
     if (e.target.classList.contains('equals')) {
         resolve()
+        renderHTML()
     }
     else {
         operator = e.target.dataset.id
-        console.log(operator)
         resolve()
+        operator = e.target.dataset.id
+        renderHTML()
     }
+}
+function renderHTML() {
+
+    if (total !== null) {
+        totalText.textContent = total;
+        ecuationText.textContent = `${operator}`
+        if (num2 !== null) {
+            ecuationText.textContent += ` ${num2}`
+        }
+    } else if (num1 !== null) {
+        ecuationText.textContent = `${num1}`;
+        if (operator !== null) ecuationText.textContent += ` ${operator}`;
+        if (num2 !== null) ecuationText.textContent += ` ${num2}`;
+    } else {
+        ecuationText.textContent = "0";
+        totalText.textContent = "";
+    }
+
 }
 
 function add(a, b) {
@@ -68,25 +98,32 @@ function resolve() {
     total = operate(parseFloat(num1), operator, parseFloat(num2));
     num1 = total;
     num2 = null;
-    operator = null
-    console.log(total)
+    operator = "+"
 }
 function clearAll() {
     total = null;
     num1 = null;
     num2 = null;
     operator = null;
+    renderHTML()
 }
 function deleteDigit() {
     if (num1 === null) return;
     if (num1 !== null && num2 === null && operator === null) {
         num1 = parseFloat(num1.toString().slice(0, -1))
-        if (isNaN(num1)) num1 = null;
+        renderHTML()
+        if (isNaN(num1)) {
+            num1 = null;
+            renderHTML()
+        }
 
     } else if (operator !== null && num2 === null) {
         operator = null;
+        renderHTML()
 
     } else {
         num2 = num2.slice(0, -1);
+        renderHTML()
+
     }
 }
