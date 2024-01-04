@@ -1,44 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Calculator</h1>
-<div class="calculator">
+    <div class="calculator-container">
+        <div class="output-container">
+            <p id="total-text"></p>
+            <p id="ecuation-text">0</p>
+        </div>
 
-    <div class="numbers" id="numbers">
-        <div class="number">1</div>
-        <div class="number">2</div>
-        <div class="number">3</div>
-        <div class="number">4</div>
-        <div class="number">5</div>
-        <div class="number">6</div>
-        <div class="number">7</div>
-        <div class="number">8</div>
-        <div class="number">9</div>
-        <div class="number">0</div>
-        <div class="number">.</div>
+        <div class="keyboard-calculator">
+            <div class="col-1">
+                <div class="erase btn" id="clearAll">AC</div>
+                <div class="erase btn" id="delete">DEL</div>
+                <div class="number btn" data-id="1">
+                    <p>1</p>
+                </div>
+                <div class="number btn" data-id="2">
+                    <p>2</p>
+                </div>
+                <div class="number btn" data-id="3">
+                    <p>3</p>
+                </div>
+                <div class="number btn" data-id="4">
+                    <p>4</p>
+                </div>
+                <div class="number btn" data-id="5">
+                    <p>5</p>
+                </div>
+                <div class="number btn" data-id="6">
+                    <p>6</p>
+                </div>
+                <div class="number btn" data-id="7">
+                    <p>7</p>
+                </div>
+                <div class="number btn" data-id="8">
+                    <p>8</p>
+                </div>
+                <div class="number btn" data-id="9">
+                    <p>9</p>
+                </div>
+                <div class="number btn" data-id="0">
+                    <p>0</p>
+                </div>
+                <div class="number btn" data-id=".">
+                    <p>.</p>
+                </div>
+
+            </div>
+            <div class="col-2">
+                <div class="operator btn" data-id="+">
+                    <p>+</p>
+                </div>
+                <div class="operator btn" data-id="-">
+                    <p>-</p>
+                </div>
+                <div class="operator btn" data-id="*">
+                    <p>*</p>
+                </div>
+                <div class="operator btn" data-id="/">
+                    <p>&divide</p>
+                </div>
+                <div class="operator btn equals">
+                    <p>=</p>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
-
-    <div class="operators" id="operators">
-        <div class="operator" data-id="+">+</div>
-        <div class="operator" data-id="-">-</div>
-        <div class="operator" data-id="*">*</div>
-        <div class="operator" data-id="/">&divide</div>
-        <div class="operator equals">=</div>
-    </div>
-
-    <div class="deleters">
-        <div class="clearAll" id="clearAll">AC</div>
-        <div class="delete" id="delete">DEL</div>
-    </div>
-
-</div>
 
     <script src="app.js"></script>
 </body>
+
 </html>
