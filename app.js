@@ -3,17 +3,14 @@ const numbersHTML = document.querySelectorAll('.number');
 const operatorsHTML = document.querySelectorAll('.operator');
 const clearAllBtn = document.querySelector('#clearAll');
 const deleteBtn = document.querySelector('#delete');
-const ecuationText = document.querySelector('#ecuation-text'); 
-const totalText = document.querySelector('#total-text'); 
-
+const ecuationText = document.querySelector('#ecuation-text');
 
 const numbers = Array.from(numbersHTML);
 const operators = Array.from(operatorsHTML);
 
-let total = null;
-let num1 = null;
-let num2 = null;
-let operator = null;
+let num1 = '';
+let num2 = '';
+let operator = '';
 
 eventListeners()
 function eventListeners() {
@@ -28,41 +25,39 @@ function eventListeners() {
 }
 
 function addDigit(e) {
-    if (!e.target.classList.contains('number')) return
-    if (operator === null) {
-        num1 === null ? num1 = e.target.dataset.id : num1 += e.target.dataset.id
+    let number;
+    if (e.target.parentNode.classList.contains('number')) {
+        number = e.target.parentNode.dataset.id;
+    } else {
+        number = e.target.dataset.id;
+    }
+    if (operator === '' || operator === '') {
+        num1 === '' ? num1 = number : num1 += number
         renderHTML()
     } else {
-        num2 === null ? num2 = e.target.dataset.id : num2 += e.target.dataset.id
+        num2 === '' ? num2 = number : num2 += number
         renderHTML()
     }
 }
 
 function addOperator(e) {
-    if (!e.target.classList.contains('operator') || num1 === null) return
-    if (e.target.classList.contains('equals')) {
+    if (num1 === '') return;
+    if (e.target.parentNode.classList.contains('equals') || e.target.classList.contains('equals')) {
         resolve()
+        operator = ''
         renderHTML()
     }
     else {
-        operator = e.target.dataset.id
         resolve()
-        operator = e.target.dataset.id
+        operator = e.target.parentNode.classList.contains('operator') ? e.target.parentNode.dataset.id : e.target.dataset.id;
         renderHTML()
     }
 }
 function renderHTML() {
-
-    if (total !== null) {
-        totalText.textContent = total;
-        ecuationText.textContent = `${operator}`
-        if (num2 !== null) {
-            ecuationText.textContent += ` ${num2}`
-        }
-    } else if (num1 !== null) {
+    if (num1 !== '') {
         ecuationText.textContent = `${num1}`;
-        if (operator !== null) ecuationText.textContent += ` ${operator}`;
-        if (num2 !== null) ecuationText.textContent += ` ${num2}`;
+        if (operator !== '') ecuationText.textContent += ` ${operator}`;
+        if (num2 !== '') ecuationText.textContent += ` ${num2}`;
     } else {
         ecuationText.textContent = "0";
         totalText.textContent = "";
@@ -94,32 +89,29 @@ function operate(a, operator, b) {
 }
 
 function resolve() {
-    if (num1 === null || num2 === null || operator === null) return
+    if (num1 === '' || num2 === '' || operator === '') return
     if (operator === '/' && num2 === '0') return
-    total = operate(parseFloat(num1), operator, parseFloat(num2));
-    num1 = total;
-    num2 = null;
-    operator = "+"
+    num1 = operate(parseFloat(num1), operator, parseFloat(num2));
+    num2 = '';
 }
 function clearAll() {
-    total = null;
-    num1 = null;
-    num2 = null;
-    operator = null;
+    num1 = '';
+    num2 = '';
+    operator = '';
     renderHTML()
 }
 function deleteDigit() {
-    if (num1 === null) return;
-    if (num1 !== null && num2 === null && operator === null) {
+    if (num1 === '') return;
+    if (num1 !== '' && num2 === '' && operator === '') {
         num1 = parseFloat(num1.toString().slice(0, -1))
         renderHTML()
         if (isNaN(num1)) {
-            num1 = null;
+            num1 = '';
             renderHTML()
         }
 
-    } else if (operator !== null && num2 === null) {
-        operator = null;
+    } else if (operator !== '' && num2 === '') {
+        operator = '';
         renderHTML()
 
     } else {
