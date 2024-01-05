@@ -23,10 +23,12 @@ function eventListeners() {
         number.addEventListener('click', addDigit);
         body.addEventListener('keydown', addDigit);
     });
+
     operators.forEach(operator => {
         operator.addEventListener('click', addOperator);
         body.addEventListener('keydown', addOperator);
-    })
+    });
+
     clearAllBtn.addEventListener('click', clearAll);
     deleteBtn.addEventListener('click', deleteDigit);
     body.addEventListener('keydown', (e) => {
@@ -124,6 +126,7 @@ function clearAll() {
     operator = '';
     renderHTML()
 }
+
 function deleteDigit() {
     if (num1.length === 1) num1 = '0';
     if (num1 !== '0' && num2 === '' && operator === '') {
@@ -133,14 +136,11 @@ function deleteDigit() {
             num1 = '0';
             renderHTML()
         }
-
     } else if (operator !== '' && num2 === '') {
         operator = '';
         renderHTML()
-
     } else {
         num2 = num2.slice(0, -1);
         renderHTML()
-
     }
 }
