@@ -56,7 +56,7 @@ function addOperator(e) {
     }
 }
 function renderHTML() {
-    if (num1 !== 0) {
+    if (num1 !== '0') {
         ecuationText.textContent = `${num1}`;
         if (operator !== '') {
             ecuationText.textContent += operator === '/' ? ` ${divideSymbol}` : ` ${operator}`;
@@ -66,7 +66,7 @@ function renderHTML() {
         ecuationText.textContent = num1;
     }
 }
-
+// Math functions
 function add(a, b) {
     return a + b
 }
@@ -93,9 +93,11 @@ function operate(a, operator, b) {
 function resolve() {
     if (num1 === '0' || num2 === '' || operator === '') return
     if (operator === '/' && num2 === '0') return
-    num1 = String(operate(parseFloat(num1), operator, parseFloat(num2)));
+    num1 = String(operate(parseFloat(num1), operator, parseFloat(num2)).toFixed(2));
     num2 = '';
 }
+
+// Erase Functions
 function clearAll() {
     num1 = '0';
     num2 = '';
