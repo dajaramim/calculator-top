@@ -18,6 +18,8 @@ eventListeners()
 function eventListeners() {
     numbers.forEach(number => {
         number.addEventListener('click', addDigit);
+        number.addEventListener('keydown', addDigit);
+
     });
     operators.forEach(operator => {
         operator.addEventListener('click', addOperator);
