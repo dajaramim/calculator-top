@@ -56,6 +56,7 @@ function addOperator(e) {
     }
 }
 function renderHTML() {
+    if(num1 === 'Infinity') num1 = 'Indeterminate'
     if (num1 !== '0') {
         ecuationText.textContent = `${num1}`;
         if (operator !== '') {
@@ -91,9 +92,9 @@ function operate(a, operator, b) {
 }
 
 function resolve() {
-    if (num1 === '0' || num2 === '' || operator === '') return
-    if (operator === '/' && num2 === '0') return
-    num1 = String(operate(parseFloat(num1), operator, parseFloat(num2)).toFixed(2));
+    if (num1 === '0' || num2 === '' || operator === '') return;
+    let result = operate(parseFloat(num1), operator, parseFloat(num2))
+    num1 = String(result).includes('.') ? String(result.toFixed(2)) : String(result);
     num2 = '';
 }
 
@@ -105,9 +106,9 @@ function clearAll() {
     renderHTML()
 }
 function deleteDigit() {
-    if (num1 === '0') return;
+    if (num1.length === 1) num1 = '0';
     if (num1 !== '0' && num2 === '' && operator === '') {
-        num1 = parseFloat(num1.toString().slice(0, -1))
+        num1 = num1.toString().slice(0, -1)
         renderHTML()
         if (isNaN(num1)) {
             num1 = '0';

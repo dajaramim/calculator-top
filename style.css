@@ -37,6 +37,7 @@ body {
     margin-bottom: 3rem;
     font-family: monospace;
     box-shadow: inset 5px 5px 5px #1d3849, inset -5px -5px 5px #1d3849;
+    overflow: hidden;
 }
 .output-container p {
     margin: 0;
