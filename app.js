@@ -5,6 +5,7 @@ const clearAllBtn = document.querySelector('#clearAll');
 const deleteBtn = document.querySelector('#delete');
 const ecuationText = document.querySelector('#ecuation-text');
 const dotBtn = document.querySelector('#dot-btn');
+const body = document.body;
 
 const numbers = Array.from(numbersHTML);
 const operators = Array.from(operatorsHTML);
@@ -13,22 +14,38 @@ const divideSymbol = String.fromCharCode(247);
 let num1 = '0';
 let num2 = '';
 let operator = '';
+const operatorSymbols = ['x', '+', '-', '/', '=', 'Enter']
+const numberSymbol = ['1','2','3','4','5','6','7','8','9','0','.'];
 
 eventListeners()
 function eventListeners() {
     numbers.forEach(number => {
         number.addEventListener('click', addDigit);
+        body.addEventListener('keydown', addDigit);
+
     });
     operators.forEach(operator => {
         operator.addEventListener('click', addOperator);
+        body.addEventListener('keydown', addOperator);
     })
     clearAllBtn.addEventListener('click', clearAll);
     deleteBtn.addEventListener('click', deleteDigit);
+    body.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+            deleteDigit()
+        }
+    });
+
 }
 
 function addDigit(e) {
     let numberSelected;
-    numberSelected = e.target.parentNode.classList.contains('number') ? e.target.parentNode.dataset.id : e.target.dataset.id;
+    if (e.type === 'keydown' && numberSymbol.includes(e.key)) {
+        numberSelected = e.key;
+    } else if (e.type === 'click') {
+        numberSelected = e.target.parentNode.classList.contains('number') ? e.target.parentNode.dataset.id : e.target.dataset.id;
+    } else return;
+
     if (num1.includes('.') && numberSelected === '.' && num2 === '') return
     if (num2.includes('.') && numberSelected === '.') return
 
@@ -42,21 +59,24 @@ function addDigit(e) {
 }
 
 function addOperator(e) {
-    if (num1 === '0') return;
-    if (e.target.parentNode.classList.contains('equals') || e.target.classList.contains('equals')) {
+    if (num1 === '0' || e.type === 'keydown' && !operatorSymbols.includes(e.key)) return;
+    if (e.target.parentNode.classList.contains('equals') || e.target.classList.contains('equals') || (e.type === 'keydown' && (e.key === '=' || e.key === 'Enter') )) {
         resolve()
         operator = ''
         renderHTML()
     }
     else {
         resolve()
-        operator = e.target.parentNode.classList.contains('operator') ? e.target.parentNode.dataset.id : e.target.dataset.id;
-        console.log(operator)
+        if (e.type === 'click') {
+            operator = e.target.parentNode.classList.contains('operator') ? e.target.parentNode.dataset.id : e.target.dataset.id;
+        } else {
+            operator = e.key;
+        }
         renderHTML()
     }
 }
 function renderHTML() {
-    if(num1 === 'Infinity') num1 = 'Indeterminate'
+    if (num1 === 'Infinity') num1 = 'Indeterminate'
     if (num1 !== '0') {
         ecuationText.textContent = `${num1}`;
         if (operator !== '') {
